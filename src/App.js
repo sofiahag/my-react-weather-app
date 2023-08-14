@@ -49,7 +49,7 @@ function App() {
       <div className="flex flex-col items-center">
         <h1 className="py-9 max-sm:py-6 text-5xl max-sm:text-4xl font-sofia mt-14 max-sm:mt-6
                 bg-gradient-to-r from-orange-700 via-pink-700 to-orange-700 inline-block text-transparent
-                bg-clip-text font-outline-2 hover:from-indigo-400 hover:via-purple-400 hover:to-pink-400">
+                bg-clip-text font-outline-2">
                   Current weather
         </h1>
         <div className="py-6">
