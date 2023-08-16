@@ -6,7 +6,7 @@ import sunnyAnimation from "./assets/animation_ll8c8mxp.json";
 import thunderAnimation from "./assets/animation_ll8cbm4a.json";
 import snowyAnimation from "./assets/animation_ll9t5myw.json";
 
-// Todo: Add autocomplete to search query, error message for incorrect spelling, and dark mode
+// Todo: Add autocomplete to search query and dark mode
 
 const api = {
   key: "cee115a29eaa2e91bdfcd41ebe04c252",
@@ -19,11 +19,14 @@ function App() {
 
   const search = evt => {
       fetch(`${api.base}weather?q=${query}&appid=${api.key}&units=metric`)
-        .then(res => res.json())
+        .then(result => result.json())
         .then(result => {
+          if (result.message === 'city not found'){
+            alert('We cannot find that country or city, please check your spelling!');
+          } 
           setWeather(result);
           setQuery('');
-          console.log(result);
+          return result;
         });
   }
 
@@ -48,7 +51,7 @@ function App() {
     <main className={(typeof weather.main != "undefined")}>
       <div className="flex flex-col items-center">
         <h1 className="py-9 max-sm:py-6 text-5xl max-sm:text-4xl font-sofia mt-14 max-sm:mt-6
-                bg-gradient-to-r from-orange-700 via-pink-700 to-orange-700 inline-block text-transparent
+                bg-gradient-to-r from-sky-700 to-orange-700 inline-block text-transparent
                 bg-clip-text font-outline-2">
                   Current weather
         </h1>
@@ -69,36 +72,36 @@ function App() {
         </div> 
         {(typeof weather.main != "undefined") ? (
         <div>
-          <div className="location-box text-pink-700">
+          <div className="location-box text-orange-700">
             <div className="location text-2xl mt-10 max-sm:mt-4 py-2 max-sm:py-4">{weather.name}, {weather.sys.country}</div>
             <div className="date text-gray-600 italic">{dateBuilder(new Date())}</div>
           </div>
           <div className="weather-box">
-            <div className="temp bg-gradient-to-b from-pink-600 via-orange-700 to-pink-600 text-transparent
+            <div className="temp bg-gradient-to-b from-sky-600 to-orange-600 text-transparent
                 bg-clip-text text-8xl">
               {Math.round(weather.main.temp)}°c
             </div>
             <div className="lottie">
-            <div className="weather text-gray-600 mt-10 mr-1 text-lg max-sm:text-2xl italic">{weather.weather[0].main}</div>
+            <div className="weather text-gray-600 mt-12 mr-1 text-lg max-sm:text-2xl italic">{weather.weather[0].main}</div>
             {(weather.weather[0].main === 'Clouds') ? (
-              <Lottie animationData={cloudyAnimation} loop={true} style={{ width: 80, height: 80, padding: 0, marginTop: '12px' }} />
-            ) : ('')}
+              <Lottie animationData={cloudyAnimation} loop={true} style={{ width: 80, height: 80, padding: 0, marginTop: '18px' }} />
+            ) : ("")}
             {(weather.weather[0].main === 'Thunderstorm') ? (
-              <Lottie animationData={thunderAnimation} loop={true} style={{ width: 80, height: 80, padding: 0, marginTop: '12px' }} />
-            ) : ('')}
+              <Lottie animationData={thunderAnimation} loop={true} style={{ width: 80, height: 80, padding: 0, marginTop: '18px' }} />
+            ) : ("")}
             {(weather.weather[0].main === 'Drizzle' || weather.weather[0].main === 'Rain') ? (
-              <Lottie animationData={rainyAnimation} loop={true} style={{ width: 80, height: 80, padding: 0, marginTop: '12px' }} />
-            ) : ('')}
+              <Lottie animationData={rainyAnimation} loop={true} style={{ width: 80, height: 80, padding: 0, marginTop: '18px' }} />
+            ) : ("")}
             {(weather.weather[0].main === 'Clear') ? (
-              <Lottie animationData={sunnyAnimation} loop={true} style={{ width: 80, height: 80, padding: 0, marginTop: '12px' }} />
-            ) : ('')}
+              <Lottie animationData={sunnyAnimation} loop={true} style={{ width: 80, height: 80, padding: 0, marginTop: '18px' }} />
+            ) : ("")}
             {(weather.weather[0].main === 'Snow') ? (
-              <Lottie animationData={snowyAnimation} loop={true} style={{ width: 80, height: 80, padding: 0, marginTop: '12px' }} />
-            ) : ('')}
+              <Lottie animationData={snowyAnimation} loop={true} style={{ width: 80, height: 80, padding: 0, marginTop: '18px' }} />
+            ) : ("")}
             </div>
           </div>
         </div>
-        ) : ("Waiting for location...")}
+        ) : ("")}
     </main>
   );
 }
