@@ -15,5 +15,6 @@ module.exports = {
         '14': '3.5rem'
       }
     },
-  }
+  },
+  darkMode: 'class'
 }

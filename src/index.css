@@ -12,9 +12,24 @@
   text-align: center;
 }
 
+.dark {
+  background: linear-gradient(0deg, rgb(47, 0, 68) 0%, rgb(0, 0, 0) 50%, rgb(0, 0, 0) 100%);
+}
+
+.dark input {
+  background-color: #492060;
+}
+
+.light {
+  background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgb(251, 242, 225) 50%, rgb(213, 227, 255) 100%);
+}
+
+.toggle {
+  margin-left: auto;
+}
+
 main {
   min-height: 100vh;
-  background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgb(253, 250, 235) 50%, rgb(233, 245, 255) 100%);
 }
 
 .lottie {
