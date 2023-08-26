@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Lottie from "lottie-react";
-import rainyAnimation from "./assets/animation_ll9roi4j.json";
-import cloudyAnimation from "./assets/animation_ll8ca4ib.json";
-import sunnyAnimation from "./assets/animation_ll8c8mxp.json";
-import thunderAnimation from "./assets/animation_ll8cbm4a.json";
-import snowyAnimation from "./assets/animation_ll9t5myw.json";
+import rain from "./assets/animation_llqn26zw.json";
+import clouds from "./assets/animation_llqs6jeg.json";
+import sun from "./assets/animation_llqsjsg4.json";
+import lightning from "./assets/animation_llrys87i.json";
+import snow from "./assets/animation_llqny2zn.json";
+import mist from "./assets/animation_lls0btwr.json";
 import lightToggle from "./assets/light-bulb.svg";
 import darkToggle from "./assets/light-bulb-dark.svg";
+
 
 // Todo: Add autocomplete to search query
 
@@ -91,33 +93,51 @@ function App() {
         </div>
         </div> 
         {(typeof weather.main != "undefined") ? (
-        <div>
+          <div>
+            {(weather.weather[0].main === 'Clouds') ? (
+              <div className="weather mt-200 lg:-mt-5">
+                <Lottie animationData={clouds} loop={true} />
+              </div>
+            ) : ("")}
+            {(weather.weather[0].main === 'Thunderstorm') ? (
+              <div className="weather mt-200 lg:mt-0">
+                <Lottie animationData={lightning} loop={true} />
+              </div>
+            ) : ("")}
+            {(weather.weather[0].main === 'Drizzle' || weather.weather[0].main === 'Rain') ? (
+              <div className="weather mt-200 lg:mt-0">
+                <Lottie animationData={rain} loop={true} />
+              </div>
+            ) : ("")}
+            {(weather.weather[0].main === 'Clear') ? (
+              <div className="weather mt-200 lg:-mt-5">
+                <Lottie animationData={sun} loop={true} />
+              </div>
+            ) : ("")}
+            {(weather.weather[0].main === 'Snow') ? (
+              <div className="weather mt-200 lg:mt-0">
+                <Lottie animationData={snow} loop={true} />
+              </div>
+            ) : ("")}
+            {(weather.weather[0].main === 'Mist' || weather.weather[0].main === 'Fog' 
+                || weather.weather[0].main === 'Dust' || weather.weather[0].main === 'Smoke' 
+                || weather.weather[0].main === 'Haze') ? (
+              <div className="weather mt-200 lg:-mt-14">
+                <Lottie animationData={mist} loop={true} />
+              </div>
+            ) : ("")}
           <div className="location-box text-orange-700 dark:text-fuchsia-500">
-            <div className="location text-2xl mt-10 max-sm:mt-4 py-2 max-sm:py-4">{weather.name}, {weather.sys.country}</div>
+            <div className="location text-2xl mt-8 max-sm:mt-4 py-2 max-sm:py-4">{weather.name}, {weather.sys.country}</div>
             <div className="date text-gray-600 dark:text-white italic">{dateBuilder(new Date())}</div>
+            <div className="text-sm">Humidity: {weather.main.humidity}%</div>
+            <div className="text-sm">Wind: {weather.wind.speed} m/s</div>
+            <div className="text-sm">Clouds: {weather.clouds.all}%</div>
+            <div className="text-gray-600 dark:text-white mt-2 text-2xl max-sm:text-2xl">{weather.weather[0].main}</div>
           </div>
           <div className="weather-box">
             <div className="temp bg-gradient-to-b from-sky-600 to-orange-600 dark:from-fuchsia-500 dark:to-blue-500 text-transparent
                 bg-clip-text text-8xl">
-              {Math.round(weather.main.temp)}°c
-            </div>
-            <div className="lottie">
-            <div className="weather text-gray-600 dark:text-white mt-12 mr-1 text-lg max-sm:text-2xl italic">{weather.weather[0].main}</div>
-            {(weather.weather[0].main === 'Clouds') ? (
-              <Lottie animationData={cloudyAnimation} loop={true} style={{ width: 80, height: 80, padding: 0, marginTop: '18px' }} />
-            ) : ("")}
-            {(weather.weather[0].main === 'Thunderstorm') ? (
-              <Lottie animationData={thunderAnimation} loop={true} style={{ width: 80, height: 80, padding: 0, marginTop: '18px' }} />
-            ) : ("")}
-            {(weather.weather[0].main === 'Drizzle' || weather.weather[0].main === 'Rain') ? (
-              <Lottie animationData={rainyAnimation} loop={true} style={{ width: 80, height: 80, padding: 0, marginTop: '18px' }} />
-            ) : ("")}
-            {(weather.weather[0].main === 'Clear') ? (
-              <Lottie animationData={sunnyAnimation} loop={true} style={{ width: 80, height: 80, padding: 0, marginTop: '18px' }} />
-            ) : ("")}
-            {(weather.weather[0].main === 'Snow') ? (
-              <Lottie animationData={snowyAnimation} loop={true} style={{ width: 80, height: 80, padding: 0, marginTop: '18px' }} />
-            ) : ("")}
+              {Math.round(weather.main.temp)}°C
             </div>
           </div>
         </div>

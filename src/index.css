@@ -34,15 +34,21 @@ main {
 
 .lottie {
   display: flex;   
-  justify-content: center; 
+  justify-content: center;
 }
 
 .weather-box .temp {
   display: inline-block;
   position: relative;
-  margin: 30px 0 0 0;
+  margin: 5px 0 0 0;
   padding: 20px 20px 10px 20px;
   background-color: rgba(39, 39, 39, 0.572);
   border-radius: 30px;
   box-shadow: 3px 4px rgba(76, 76, 76, 0.412);
+}
+
+.weather {
+	position: fixed;
+  width: 100%;
+  /* top: 300px; */
 }
