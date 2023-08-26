@@ -6,6 +6,7 @@ import sun from "./assets/animation_llqsjsg4.json";
 import lightning from "./assets/animation_llrys87i.json";
 import snow from "./assets/animation_llqny2zn.json";
 import mist from "./assets/animation_lls0btwr.json";
+import error from "./assets/animation_lls1jeej.json";
 import lightToggle from "./assets/light-bulb.svg";
 import darkToggle from "./assets/light-bulb-dark.svg";
 
@@ -34,13 +35,14 @@ function App() {
     document.body.className = theme;
   }, [theme]);
 
-  const search = evt => {
-      fetch(`${api.base}weather?q=${query}&appid=${api.key}&units=metric`)
+  const search = async evt => {
+      await fetch(`${api.base}weather?q=${query}&appid=${api.key}&units=metric`)
         .then(result => result.json())
         .then(result => {
           if (result.message === 'city not found'){
-            alert('We cannot find that country or city, please check your spelling!');
-          } 
+            alert('We cannot find that country or city, please check your spelling!');  
+            result = 'Error';
+          }
           setWeather(result);
           setQuery('');
           return result;
@@ -92,6 +94,11 @@ function App() {
           </form>
         </div>
         </div> 
+        {(weather === 'Error') ? (
+          <div className="weather">
+            <Lottie animationData={error} loop={true} style={{ height: 300, marginTop: '30px' }}/>
+          </div>
+        ) : ("")}
         {(typeof weather.main != "undefined") ? (
           <div>
             {(weather.weather[0].main === 'Clouds') ? (

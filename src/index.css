@@ -32,11 +32,6 @@ main {
   min-height: 100vh;
 }
 
-.lottie {
-  display: flex;   
-  justify-content: center;
-}
-
 .weather-box .temp {
   display: inline-block;
   position: relative;
@@ -50,5 +45,4 @@ main {
 .weather {
 	position: fixed;
   width: 100%;
-  /* top: 300px; */
 }
