@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Lottie from "lottie-react";
-import rain from "./assets/animation_llqn26zw.json";
+import rain from "./assets/animation_lls17dru.json";
 import clouds from "./assets/animation_llqs6jeg.json";
 import sun from "./assets/animation_llqsjsg4.json";
 import lightning from "./assets/animation_llrys87i.json";

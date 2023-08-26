@@ -1,0 +1,57 @@
+body {
+  min-height: 100vh;
+}
+
+#Rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+}
+
+.droplet {
+  background: #000;
+  width: 1px;
+    height: 89px;
+    position: absolute;
+    bottom: 200px;
+  animation: fall 1.5s linear infinite;
+}
+
+.drop {
+  background: #000;
+  width: 1px;
+  height: 89px;
+  position: absolute;
+  bottom: 200px;
+  animation: falling 1.5s linear infinite;
+}
+
+@media (max-width: 600px) {
+  #Rain {
+    height: 105vh;
+  }
+}
+
+@keyframes fall {
+  0% {
+    transform: translate(0, 0) rotate(15deg)
+  }
+
+  100% {
+    transform: translate(-400px, 1000px) rotate(15deg)
+  }
+}
+
+@keyframes falling {
+  0% {
+    transform: translate(0, 0)
+  }
+
+  100% {
+    transform: translate(0, 1000px)
+  }
+}
