@@ -4,16 +4,21 @@
 
 @font-face {
   font-family: 'Sofia Pro';
-  src: local('Sofia Pro'), url('./fonts/sofiapro-light.otf') format('opentype');
+  src: local('Sofia Pro'), url('./assets/fonts/sofiapro-light.otf') format('opentype');
+  font-display: fallback;
 }
 
 * {
-  font-family: 'Sofia Pro';
+  font-family: 'Sofia Pro', Arial, Helvetica, sans-serif;
   text-align: center;
 }
 
 .dark {
   background: linear-gradient(0deg, rgb(47, 0, 68) 0%, rgb(0, 0, 0) 50%, rgb(0, 0, 0) 100%);
+}
+
+.cloudy {
+  background: linear-gradient(0deg, rgb(101, 101, 101) 0%, rgb(80, 84, 122) 50%, rgb(172, 201, 255) 100%);
 }
 
 .dark input {
