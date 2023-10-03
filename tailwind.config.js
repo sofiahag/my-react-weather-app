@@ -18,6 +18,5 @@ module.exports = {
         '300': '300px'
       }
     },
-  },
-  darkMode: 'class'
+  }
 }

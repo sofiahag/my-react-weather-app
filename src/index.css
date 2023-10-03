@@ -13,26 +13,6 @@
   text-align: center;
 }
 
-.dark {
-  background: linear-gradient(0deg, rgb(47, 0, 68) 0%, rgb(0, 0, 0) 50%, rgb(0, 0, 0) 100%);
-}
-
-.cloudy {
-  background: linear-gradient(0deg, rgb(101, 101, 101) 0%, rgb(80, 84, 122) 50%, rgb(172, 201, 255) 100%);
-}
-
-.dark input {
-  background-color: #492060;
-}
-
-.light {
-  background: linear-gradient(0deg, rgb(255, 241, 217) 0%, rgb(255, 228, 181) 50%, rgb(181, 204, 253) 100%);
-}
-
-.toggle {
-  margin-left: auto;
-}
-
 main {
   min-height: 100vh;
 }
