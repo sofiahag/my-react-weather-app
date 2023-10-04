@@ -21,11 +21,13 @@ const api = {
 function Weather() {
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({});
-  const [sky, setSky] = useState('#fbe7f5');
+  const [sky, setSky] = useState('linear-gradient(#799cf2, #b194f5, #f593e1, #f5e994)');
 
-  const clearSky = '#ecf7fd';
-  const dustySky = '#efe6db';
-  const cloudySky = '#e1e5ec'; 
+  const clearSky = 'linear-gradient(#48a6ee, #48a6ee, #f2d079)';
+  const dustySky = 'linear-gradient(#e66465, #9198e5)';
+  const cloudySky = 'linear-gradient(#48a6ee, #48a6ee, #88b8dd, #abcde7)'; 
+  const rainySky = 'linear-gradient(#696969, #696969, #b7c1d0)'; 
+  const mistySky = 'linear-gradient(#48a6ee, #7eb6d6, #d1dee8)'; 
 
   const search = async evt => {
       await fetch(`${api.base}weather?q=${query}&appid=${api.key}&units=metric`)
@@ -49,15 +51,19 @@ function Weather() {
       case 'Clear':
           setSky(clearSky);
           break;
-      case 'Clouds':
       case 'Rain':
       case 'Drizzle':
       case 'Thunderstorm':
+          setSky(rainySky);
+          break;
+      case 'Clouds':
+          setSky(cloudySky);
+          break;
       case 'Mist':
       case 'Haze':
       case 'Fog':
       case 'Snow':
-          setSky(cloudySky);
+          setSky(mistySky);
           break;
       case 'Dust':
       case 'Smoke':
@@ -86,11 +92,9 @@ function Weather() {
   };
 
   return (
-    <main style={{backgroundColor: sky}}>
+    <main style={{background: sky}}>
       <div className="flex flex-col items-center">
-        <h1 className="py-9 max-sm:py-6 text-5xl max-sm:text-4xl font-sofia mt-12 max-sm:mt-6
-                bg-gradient-to-r from-sky-900 via-sky-700 to-sky-900 inline-block text-transparent
-                bg-clip-text font-outline-2">
+        <h1 className="py-9 text-white drop-shadow-md max-sm:py-6 text-5xl max-sm:text-4xl font-sofia mt-12 max-sm:mt-6">
                   Current weather
         </h1>
         <div className="py-6">
@@ -99,13 +103,12 @@ function Weather() {
           <input 
             id="search"
             type="text"
-            className="search-bar border-pink-300 border-2 px-4 py-3 text-left md:w-[500px] lg:w-[1000px]"
+            className="search-bar border-fuchsia-400 border-2 px-4 py-3 text-left md:w-[500px] lg:w-[1000px]"
             placeholder="Enter country or city"
             onChange={e => setQuery(e.target.value)}
             value={query}
           />
-          <button type="submit" className="px-4 py-3 border-2 border-sky-800 bg-gradient-to-r from-sky-900 via-sky-700
-             to-sky-900 text-white">
+          <button type="submit" className="px-4 py-3 border-2 border-fuchsia-600 bg-fuchsia-600 text-white">
             Search
           </button>
           </form>
@@ -150,17 +153,16 @@ function Weather() {
                 <Lottie animationData={mist} loop={true} />
               </div>
             ) : ("")}
-          <div className="location-box text-sky-800">
-            <div className="location text-2xl mt-8 max-sm:mt-4 py-2 max-sm:py-4">{weather.name}, {weather.sys.country}</div>
-            <div className="date text-gray-700 dark:text-white italic">{dateBuilder(new Date())}</div>
+          <div className="location-box text-white drop-shadow-md">
+            <div className="location drop-shadow-md text-2xl mt-8 max-sm:mt-4 py-2 max-sm:py-4">{weather.name}, {weather.sys.country}</div>
+            <div className="date text-white drop-shadow-md italic">{dateBuilder(new Date())}</div>
             <div className="text-md">Humidity: {weather.main.humidity}%</div>
             <div className="text-md">Wind: {weather.wind.speed} m/s</div>
             <div className="text-md">Clouds: {weather.clouds.all}%</div>
-            <div className="text-gray-600 dark:text-white mt-2 text-2xl max-sm:text-2xl">{weather.weather[0].main}</div>
+            <div className="text-white drop-shadow-md mt-2 text-2xl max-sm:text-2xl">{weather.weather[0].main}</div>
           </div>
-          <div className="weather-box">
-            <div className="temp bg-gradient-to-b from-sky-500 to-sky-900 text-transparent
-                bg-clip-text text-8xl">
+          <div className="weather-box mt-2">
+            <div className="temp temp-font drop-shadow-md font-outline-2 text-8xl">
               {Math.round(weather.main.temp)}°C
             </div>
           </div>

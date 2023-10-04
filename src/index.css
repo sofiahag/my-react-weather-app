@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @font-face {
   font-family: 'Sofia Pro';
   src: local('Sofia Pro'), url('./assets/fonts/sofiapro-light.otf') format('opentype');
@@ -22,9 +23,17 @@ main {
   position: relative;
   margin: 5px 0 0 0;
   padding: 20px 20px 10px 20px;
-  background-color: rgba(39, 39, 39, 0.572);
+  background-color: rgba(255, 255, 255, 0.507);
   border-radius: 30px;
   box-shadow: 3px 4px rgba(76, 76, 76, 0.412);
+}
+
+.font-outline-2 {
+  -webkit-text-stroke: 2px #C125D3;
+}
+
+.temp-font {
+  color: #cb62d6;
 }
 
 .weather {
