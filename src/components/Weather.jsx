@@ -11,7 +11,7 @@ import sun from "../assets/images/sunny.json";
 import error from "../assets/images/error.json";
 
 
-// Todo: Add autocomplete to search query, add gradients to background and different text colors based on background color
+// Todo: Add autocomplete to search query
 
 const api = {
   key: "cee115a29eaa2e91bdfcd41ebe04c252",
@@ -21,10 +21,10 @@ const api = {
 function Weather() {
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({});
-  const [sky, setSky] = useState('linear-gradient(#799cf2, #b194f5, #f593e1, #f5e994)');
+  const [sky, setSky] = useState('linear-gradient(#799cf2, #b194f5, #f5a793, #f5e994)');
 
   const clearSky = 'linear-gradient(#48a6ee, #48a6ee, #f2d079)';
-  const dustySky = 'linear-gradient(#e66465, #9198e5)';
+  const dustySky = 'linear-gradient(#8ab5dc, #aeb3b8)';
   const cloudySky = 'linear-gradient(#48a6ee, #48a6ee, #88b8dd, #abcde7)'; 
   const rainySky = 'linear-gradient(#696969, #696969, #b7c1d0)'; 
   const mistySky = 'linear-gradient(#48a6ee, #7eb6d6, #d1dee8)'; 
@@ -103,12 +103,12 @@ function Weather() {
           <input 
             id="search"
             type="text"
-            className="search-bar border-fuchsia-400 border-2 px-4 py-3 text-left md:w-[500px] lg:w-[1000px]"
+            className="search-bar px-4 py-3 text-left md:w-[500px] lg:w-[1000px]"
             placeholder="Enter country or city"
             onChange={e => setQuery(e.target.value)}
             value={query}
           />
-          <button type="submit" className="px-4 py-3 border-2 border-fuchsia-600 bg-fuchsia-600 text-white">
+          <button type="submit" className="px-4 py-3 bg-orange-700 text-white">
             Search
           </button>
           </form>
@@ -162,7 +162,7 @@ function Weather() {
             <div className="text-white drop-shadow-md mt-2 text-2xl max-sm:text-2xl">{weather.weather[0].main}</div>
           </div>
           <div className="weather-box mt-2">
-            <div className="temp temp-font drop-shadow-md font-outline-2 text-8xl">
+            <div className="temp drop-shadow-md text-orange-700 text-8xl">
               {Math.round(weather.main.temp)}°C
             </div>
           </div>

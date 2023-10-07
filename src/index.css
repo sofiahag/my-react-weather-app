@@ -28,14 +28,6 @@ main {
   box-shadow: 3px 4px rgba(76, 76, 76, 0.412);
 }
 
-.font-outline-2 {
-  -webkit-text-stroke: 2px #C125D3;
-}
-
-.temp-font {
-  color: #cb62d6;
-}
-
 .weather {
 	position: fixed;
   width: 100%;
