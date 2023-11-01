@@ -142,7 +142,7 @@ function Weather() {
               </div>
             ) : ("")}
             {(weather.weather[0].main === 'Snow') ? (
-              <div className="weather md:mt-100 max-sm:mt-100">
+              <div className="weather mt-0">
                 <Lottie animationData={snow} loop={true} />
               </div>
             ) : ("")}
