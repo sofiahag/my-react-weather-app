@@ -9,11 +9,9 @@ import mist from '../assets/images/misty.json';
 import sun from '../assets/images/sunny.json';
 import error from '../assets/images/error.json';
 
-const config = require('../config');
-
 const api = {
-  key: config.openWeatherMapApiKey,
-  base: 'https://api.openweathermap.org/data/2.5/'
+  key: `${process.env.REACT_APP_WEATHER_API_KEY}`,
+  base: 'https://api.openweathermap.org/data/2.5/',
 };
 
 function Weather() {
