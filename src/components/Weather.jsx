@@ -15,6 +15,8 @@ const api = {
   base: 'https://api.openweathermap.org/data/2.5/',
 };
 
+//TODO Clean up code
+
 function Weather() {
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({});
@@ -73,7 +75,7 @@ function Weather() {
   };
 
   const lottieStyles = {
-    marginTop: isMediumScreen ? '30%' : (isSmallScreen ? '55%' : '10%'),
+    marginTop: isMediumScreen ? '30%' : (isSmallScreen ? '55%' : '0%'),
   };
 
   useEffect(() => {
@@ -188,12 +190,12 @@ function Weather() {
             </Box>
           )}
           {weather.weather[0].main === 'Thunderstorm' && (
-            <Box>
+            <Box style={lottieStyles}>
               <Lottie animationData={lightning} loop />
             </Box>
           )}
           {(weather.weather[0].main === 'Drizzle' || weather.weather[0].main === 'Rain') && (
-            <Box>
+            <Box style={lottieStyles}>
               <Lottie animationData={rain} loop />
             </Box>
           )}
@@ -203,7 +205,7 @@ function Weather() {
             </Box>
           )}
           {weather.weather[0].main === 'Snow' && (
-            <Box>
+            <Box style={lottieStyles}>
               <Lottie animationData={snow} loop />
             </Box>
           )}
