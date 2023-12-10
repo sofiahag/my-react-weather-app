@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, Typography, Box, ThemeProvider, createTheme } from '@mui/material';
 import Lottie from 'lottie-react';
 
 import rain from '../assets/images/rainy.json';
@@ -19,29 +20,85 @@ function Weather() {
   const [weather, setWeather] = useState({});
   const [sky, setSky] = useState('linear-gradient(#799cf2, #b194f5, #f5a793, #f5e994)');
 
-  const backgroundStyles = {
-    background: sky,
-  };
-
   const clearSky = 'linear-gradient(#48a6ee, #48a6ee, #f2d079)';
   const dustySky = 'linear-gradient(#8ab5dc, #aeb3b8)';
   const cloudySky = 'linear-gradient(#48a6ee, #48a6ee, #88b8dd, #abcde7)';
   const rainySky = 'linear-gradient(#696969, #696969, #b7c1d0)';
   const mistySky = 'linear-gradient(#48a6ee, #7eb6d6, #d1dee8)';
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const backgroundStyles = {
+    background: sky,
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  };
+
+  const theme = createTheme({
+    typography: {
+      fontFamily: 'Sofia Pro, Arial, Helvetica, sans-serif',
+      textAlign: 'center',
+    },
+    palette: {
+      primary: {
+        main: '#c2410c'
+      }
+    }
+  });
+
+  const isMediumScreen = windowWidth >= 768 && windowWidth <= 1024;
+  const isSmallScreen = windowWidth < 768;
+  
+  const weatherBoxStyles = {
+    position: 'absolute',
+    zIndex: '1',
+    top: isMediumScreen ? '48%' : '70%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  };
+
+  const textFieldStyles = {
+    backgroundColor: 'white',
+    width: isSmallScreen ? '100%' : '200%',
+    marginTop: '40px',
+    marginLeft: isSmallScreen ? '0' : '-50%',
+  };
+  
+  const buttonStyles = {
+    width: isSmallScreen ? '100%' : '200%',
+    marginLeft: isSmallScreen ? '0' : '-50%',
+    marginTop: '10px',
+  };
+
+  const lottieStyles = {
+    marginTop: isMediumScreen ? '30%' : (isSmallScreen ? '55%' : '10%'),
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const search = async () => {
     try {
       const response = await fetch(`${api.base}weather?q=${query}&appid=${api.key}&units=metric`);
       const result = await response.json();
-
-      if (result.message === 'city not found') {
-        setWeather({ error: 'City not found' });
-      } else {
+      if (response.ok) {
         toggleBg(result.weather[0].main);
+        setWeather(result);
+        setQuery('');
+      } else {
+        setWeather({ error: result.message || 'City not found' });
       }
-
-      setWeather(result);
-      setQuery('');
     } catch (error) {
       console.error('Error fetching weather data:', error);
       setWeather({ error: 'Error fetching weather data' });
@@ -94,84 +151,105 @@ function Weather() {
   };
 
   return (
-    <main style={backgroundStyles} className="weather-container">
-      <div className="flex flex-col items-center">
-        <h1 className="py-9 text-white drop-shadow-md max-sm:py-6 text-5xl max-sm:text-4xl font-sofia mt-12 max-sm:mt-6">
+    <ThemeProvider theme={theme}>
+    <div style={{ ...backgroundStyles, width: '100%', height: '100vh', overflow: 'hidden' }} component="main">
+      <Box textAlign="center" mt={8}>
+        <Typography variant="h3" style={{ color: 'white', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>
           Current weather
-        </h1>
-        <div className="py-6">
+        </Typography>
+        <Box mt={3} display="flex" justifyContent="center">
           <form onSubmit={handleSubmit}>
-            <label htmlFor="search" className="hidden">Search</label>
-            <input
+            <TextField
               id="search"
               type="text"
-              className="search-bar px-4 py-3 text-left md:w-[500px] lg:w-[1000px]"
+              variant="outlined"
+              fullWidth
               placeholder="Enter country or city"
               onChange={(e) => setQuery(e.target.value)}
               value={query}
+              style={textFieldStyles}
             />
-            <button type="submit" className="px-4 py-3 bg-orange-700 text-white">
-              Search
-            </button>
+            <Button type="submit" variant="contained" color="primary" fullWidth style={buttonStyles}>
+              <Typography variant="button" style={{ fontSize: '1.1rem' }}>Search</Typography>
+            </Button>
           </form>
-        </div>
-      </div>
+          </Box>
+        </Box>
       {weather.error && (
-        <div className="error-container">
-          <Lottie animationData={error} loop={true} style={{ height: 300, marginTop: '50px' }} />
-        </div>
+        <Box style={lottieStyles}>
+          <Lottie animationData={error} loop />
+        </Box>
       )}
       {weather.main && (
-        <div>
+        <Box>
           {weather.weather[0].main === 'Clouds' && (
-            <div className="weather xl:mt-0 md:mt-100 max-sm:mt-200">
-              <Lottie animationData={clouds} loop={true} />
-            </div>
+            <Box style={lottieStyles}>
+              <Lottie animationData={clouds} loop />
+            </Box>
           )}
           {weather.weather[0].main === 'Thunderstorm' && (
-            <div className="weather xl:mt-0 md:mt-100 max-sm:mt-100">
-              <Lottie animationData={lightning} loop={true} />
-            </div>
+            <Box>
+              <Lottie animationData={lightning} loop />
+            </Box>
           )}
           {(weather.weather[0].main === 'Drizzle' || weather.weather[0].main === 'Rain') && (
-            <div className="weather xl:mt-0 md:mt-0 max-sm:mt-0">
-              <Lottie animationData={rain} loop={true} />
-            </div>
+            <Box>
+              <Lottie animationData={rain} loop />
+            </Box>
           )}
           {weather.weather[0].main === 'Clear' && (
-            <div className="weather xl:mt-20 md:mt-200 max-sm:mt-200">
-            <Lottie animationData={sun} loop={true} />
-          </div>
-        )}
-        {weather.weather[0].main === 'Snow' && (
-          <div className="weather mt-0">
-            <Lottie animationData={snow} loop={true} />
-          </div>
-        )}
-        {(weather.weather[0].main === 'Mist' || weather.weather[0].main === 'Fog'
-          || weather.weather[0].main === 'Dust' || weather.weather[0].main === 'Smoke'
-          || weather.weather[0].main === 'Haze') && (
-          <div className="weather xl:mt-0 md:mt-100 max-sm:mt-200">
-            <Lottie animationData={mist} loop={true} />
-          </div>
-        )}
-        <div className="location-box text-white drop-shadow-md">
-          <div className="location drop-shadow-md text-2xl mt-8 max-sm:mt-4 py-2 max-sm:py-4">{weather.name}, {weather.sys.country}</div>
-          <div className="date text-white drop-shadow-md italic">{dateBuilder(new Date())}</div>
-          <div className="text-md">Humidity: {weather.main.humidity}%</div>
-          <div className="text-md">Wind: {weather.wind.speed} m/s</div>
-          <div className="text-md">Clouds: {weather.clouds.all}%</div>
-          <div className="text-white drop-shadow-md mt-2 text-2xl max-sm:text-2xl">{weather.weather[0].main}</div>
-        </div>
-        <div className="weather-box mt-2">
-          <div className="temp drop-shadow-md text-orange-700 text-8xl">
-            {Math.round(weather.main.temp)}°C
-          </div>
-        </div>
-      </div>
-    )}
-  </main>
-);
+            <Box style={{ marginTop: '330px' }}>
+              <Lottie animationData={sun} loop />
+            </Box>
+          )}
+          {weather.weather[0].main === 'Snow' && (
+            <Box>
+              <Lottie animationData={snow} loop />
+            </Box>
+          )}
+          {(weather.weather[0].main === 'Mist' || weather.weather[0].main === 'Fog'
+            || weather.weather[0].main === 'Dust' || weather.weather[0].main === 'Smoke'
+            || weather.weather[0].main === 'Haze') && (
+            <Box style={{ marginTop: '330px' }}>
+              <Lottie animationData={mist} loop />
+            </Box>
+          )}
+          {weather.main && weather.sys && (
+          <Box style={weatherBoxStyles}>
+            <Box className="location-box" textAlign="center">
+              <Typography className="location" variant="h5" style={{ color: 'white', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>
+                {weather.name}, {weather.sys.country}
+              </Typography>
+              <Typography className="date" variant="subtitle2" style={{ color: 'white', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>
+                {dateBuilder(new Date())}
+              </Typography>
+              <Typography className="text-md" variant="body2" style={{ color: 'white', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>
+                Humidity: {weather.main.humidity}%
+              </Typography>
+              <Typography className="text-md" variant="body2" style={{ color: 'white', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>
+                Wind: {weather.wind.speed} m/s
+              </Typography>
+              <Typography className="text-md" variant="body2" style={{ color: 'white', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>
+                Clouds: {weather.clouds.all}%
+              </Typography>
+              <Typography variant="h5" style={{ color: 'white', fontSize: '1.7rem', marginTop: '2px', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>
+                {weather.weather[0].main}
+              </Typography>
+            </Box>
+            <Box className="weather-box" textAlign="center">
+              <Box className="temp" style={{ display: 'inline-block', position: 'relative', margin: '5px 0 0 0', padding: '20px 20px 10px 20px', backgroundColor: 'rgba(255, 255, 255, 0.507)', borderRadius: '30px', boxShadow: '3px 4px rgba(76, 76, 76, 0.412)' }}>
+                <Typography variant="h1" color="primary">
+                  {Math.round(weather.main.temp)}°C
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+          )}
+        </Box>
+      )}
+    </div>
+    </ThemeProvider>
+  );
 }
 
 export default Weather;
