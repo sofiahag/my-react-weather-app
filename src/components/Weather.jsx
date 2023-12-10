@@ -186,7 +186,7 @@ function Weather() {
         </Box>
       )}
       {weather.main && (
-          <Box className="lottie-box">
+          <Box className="lottie-box" style={lottieStyles}>
             <Lottie animationData={weatherAnimations[weather.weather[0].main]} loop />
           </Box>
       )}
