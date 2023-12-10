@@ -70,7 +70,7 @@ function Weather() {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    minWidth: '100vh', 
+    width: '100%', 
     height: '100vh', 
     overflow: 'hidden'
   };
