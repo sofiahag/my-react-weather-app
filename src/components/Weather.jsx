@@ -83,7 +83,7 @@ function Weather() {
   const weatherBoxStyles = {
     position: 'absolute',
     zIndex: '1',
-    top: isMediumScreen ? '48%' : (isLargeScreen ? '50%' : '70%'),
+    top: isMediumScreen ? '48%' : (isLargeScreen ? '50%' : (isLaptopScreen ? '70%' : '70%')),
     left: '50%',
     transform: 'translate(-50%, -50%)',
   };
