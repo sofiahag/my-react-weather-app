@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { TextField, Button, Typography, Box, ThemeProvider, createTheme } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import Lottie from 'lottie-react';
@@ -64,6 +64,8 @@ function Weather() {
   const [sky, setSky] = useState('linear-gradient(#799cf2, #b194f5, #f5a793, #f5e994)');
   const [cityOptions, setCityOptions] = useState([]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const formRef = useRef(null);
 
   const backgroundStyles = {
     background: sky,
@@ -131,7 +133,7 @@ function Weather() {
           return;
         }
         const response = await fetch(`${api.base}weather?q=${query}&appid=${api.key}`);
-        const data = await response.json(); 
+        const data = await response.json();
         if (response.ok) {
           const cityNames = [data.name];
           setCityOptions(cityNames);
@@ -145,7 +147,7 @@ function Weather() {
         console.error('Error fetching cities:', error.message || 'Unknown error');
         setCityOptions([]);
       }
-    }; 
+    };
     fetchCities();
   }, [query]);   
 
@@ -177,6 +179,11 @@ function Weather() {
     return `${day} ${date} ${month} ${year}`;
   };
 
+  const handleAutocompleteChange = (newValue) => {
+    setQuery(newValue);
+    formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     search();
@@ -190,12 +197,12 @@ function Weather() {
           Current weather
         </Typography>
         <Box mt={3} display="flex" justifyContent="center">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} ref={formRef}>
             <Autocomplete
               id="search"
               options={cityOptions}
               value={cityOptions.includes(query) ? query : null}
-              onChange={(event, newValue) => setQuery(newValue)}
+              onChange={handleAutocompleteChange}
               fullWidth
               renderInput={(params) => (
                 <TextField
