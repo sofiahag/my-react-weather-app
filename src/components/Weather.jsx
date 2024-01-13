@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { TextField, Button, Typography, Box, ThemeProvider, createTheme } from '@mui/material';
-import Autocomplete from '@mui/material/Autocomplete';
 import Lottie from 'lottie-react';
 
 import rain from '../assets/images/rainy.json';
@@ -62,7 +61,6 @@ function Weather() {
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({});
   const [sky, setSky] = useState('linear-gradient(#799cf2, #b194f5, #f5a793, #f5e994)');
-  const [cityOptions, setCityOptions] = useState([]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const formRef = useRef(null);
@@ -105,7 +103,7 @@ function Weather() {
   };
 
   const lottieStyles = {
-    marginTop: isMediumScreen ? '30%' : (isSmallScreen ? '55%' : '0%'),
+    marginTop: isMediumScreen ? '10%' : (isSmallScreen ? '25%' : '0%'),
   };
 
   useEffect(() => {
@@ -123,33 +121,7 @@ function Weather() {
       const condition = weather.weather[0].main;
       setSky(initialSky[condition] || initialSky.Clear);
     }
-  }, [weather]);
-
-  useEffect(() => {
-    const fetchCities = async () => {
-      try {
-        if (query.length < 3) {
-          setCityOptions([]);
-          return;
-        }
-        const response = await fetch(`${api.base}weather?q=${query}&appid=${api.key}`);
-        const data = await response.json();
-        if (response.ok) {
-          const cityNames = [data.name];
-          setCityOptions(cityNames);
-        } else if (response.status === 404) {
-          setCityOptions([]);
-        } else {
-          console.error('Error fetching cities:', data.message || 'Unknown error');
-          setCityOptions([]);
-        }
-      } catch (error) {
-        console.error('Error fetching cities:', error.message || 'Unknown error');
-        setCityOptions([]);
-      }
-    };
-    fetchCities();
-  }, [query]);   
+  }, [weather]);  
 
   const search = async () => {
     try {
@@ -179,11 +151,6 @@ function Weather() {
     return `${day} ${date} ${month} ${year}`;
   };
 
-  const handleAutocompleteChange = (newValue) => {
-    setQuery(newValue);
-    formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     search();
@@ -198,27 +165,15 @@ function Weather() {
         </Typography>
         <Box mt={3} display="flex" justifyContent="center">
           <form onSubmit={handleSubmit} ref={formRef}>
-            <Autocomplete
+            <TextField
               id="search"
-              options={cityOptions}
-              value={cityOptions.includes(query) ? query : null}
-              onChange={handleAutocompleteChange}
+              type="text"
+              variant="outlined"
+              placeholder="Enter country or city"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
               fullWidth
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  placeholder="Enter country or city"
-                  onChange={(e) => setQuery(e.target.value)}
-                  value={query}
-                  sx={{
-                    ...textFieldStyles,
-                    '& .MuiAutocomplete-inputRoot .MuiAutocomplete-input': {
-                      width: '100% !important'
-                    }
-                  }}
-                />
-              )}
+              style={textFieldStyles}
             />
             <Button type="submit" variant="contained" color="primary" fullWidth style={buttonStyles}>
               <Typography variant="button" style={{ fontSize: '1.1rem' }}>Search</Typography>
