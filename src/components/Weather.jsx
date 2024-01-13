@@ -91,22 +91,22 @@ function Weather() {
 
   const textFieldStyles = {
     backgroundColor: 'white',
-    width: isSmallScreen ? '100%' : '250%',
+    width: isSmallScreen ? '100%' : '200%',
     marginTop: '40px',
-    marginLeft: isSmallScreen ? '0' : '-75%',
+    marginLeft: isSmallScreen ? '0' : '-50%',
   };
   
   const buttonStyles = {
-    width: isSmallScreen ? '100%' : '250%',
-    marginLeft: isSmallScreen ? '0' : '-75%',
+    width: isSmallScreen ? '100%' : '200%',
+    marginLeft: isSmallScreen ? '0' : '-50%',
     marginTop: '10px',
   };
 
   const lottieStyles = {
     marginTop: 
-      weather.weather && weather.weather.length > 0 && weather.weather[0].main === 'Rain' && isMediumScreen ? '0%' :
+      weather.weather && weather.weather.length > 0 && (weather.weather[0].main === 'Rain' || weather.weather[0].main === 'Snow') && isMediumScreen ? '0%' :
       (isLargeScreen || isLaptopScreen ? '0%' :
-      (weather.weather && weather.weather.length > 0 && weather.weather[0].main === 'Rain' && isSmallScreen ? '0%' : 
+      (weather.weather && weather.weather.length > 0 && (weather.weather[0].main === 'Rain' || weather.weather[0].main === 'Snow') && isSmallScreen ? '0%' : 
       '30%'))
   };
 
