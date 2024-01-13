@@ -44,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "tailwindcss": "^3.3.3"
   },
   "description": "Built with Create React App, and Tailwind CSS. It's using the OpenWeatherMap API and some Lottie animations. It has dark mode!",
