@@ -91,19 +91,23 @@ function Weather() {
 
   const textFieldStyles = {
     backgroundColor: 'white',
-    width: isSmallScreen ? '100%' : '200%',
+    width: isSmallScreen ? '100%' : '250%',
     marginTop: '40px',
-    marginLeft: isSmallScreen ? '0' : '-50%',
+    marginLeft: isSmallScreen ? '0' : '-75%',
   };
   
   const buttonStyles = {
-    width: isSmallScreen ? '100%' : '200%',
-    marginLeft: isSmallScreen ? '0' : '-50%',
+    width: isSmallScreen ? '100%' : '250%',
+    marginLeft: isSmallScreen ? '0' : '-75%',
     marginTop: '10px',
   };
 
   const lottieStyles = {
-    marginTop: isMediumScreen ? '10%' : (isSmallScreen ? '25%' : '0%'),
+    marginTop: 
+      weather.weather && weather.weather.length > 0 && weather.weather[0].main === 'Rain' && isMediumScreen ? '0%' :
+      (isLargeScreen || isLaptopScreen ? '0%' :
+      (weather.weather && weather.weather.length > 0 && weather.weather[0].main === 'Rain' && isSmallScreen ? '0%' : 
+      '30%'))
   };
 
   useEffect(() => {
@@ -176,7 +180,7 @@ function Weather() {
               style={textFieldStyles}
             />
             <Button type="submit" variant="contained" color="primary" fullWidth style={buttonStyles}>
-              <Typography variant="button" style={{ fontSize: '1.1rem' }}>Search</Typography>
+              <Typography variant="button" style={{ fontSize: '1.1rem', marginTop: '1%' }}>Search</Typography>
             </Button>
           </form>
           </Box>
