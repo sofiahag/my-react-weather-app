@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { TextField, Button, Typography, Box, ThemeProvider, createTheme } from '@mui/material';
 import Lottie from 'lottie-react';
 
-import rain from '../assets/images/rainy.json';
-import clouds from '../assets/images/cloudy.json';
-import lightning from '../assets/images/thunder.json';
-import snow from '../assets/images/snowy.json';
-import mist from '../assets/images/misty.json';
-import sun from '../assets/images/sunny.json';
-import error from '../assets/images/error.json';
+import Rain from '../assets/images/rainy.json';
+import Clouds from '../assets/images/cloudy.json';
+import Lightning from '../assets/images/thunder.json';
+import Snow from '../assets/images/snowy.json';
+import Mist from '../assets/images/misty.json';
+import Sun from '../assets/images/sunny.json';
+import Error from '../assets/images/error.json';
 
 const REACT_APP_WEATHER_API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 
@@ -30,17 +30,17 @@ const theme = createTheme({
 });
 
 const weatherAnimations = {
-  Clear: sun,
-  Dust: mist,
-  Smoke: mist,
-  Clouds: clouds,
-  Rain: rain,
-  Drizzle: rain,
-  Thunderstorm: lightning, 
-  Mist: mist,
-  Haze: mist,
-  Fog: mist,
-  Snow: snow,
+  Clear: Sun,
+  Dust: Mist,
+  Smoke: Mist,
+  Clouds: Clouds,
+  Rain: Rain,
+  Drizzle: Rain,
+  Thunderstorm: Lightning, 
+  Mist: Mist,
+  Haze: Mist,
+  Fog: Mist,
+  Snow: Snow,
 }; 
 
 const initialSky = {
@@ -62,7 +62,7 @@ const initialSky = {
 function Weather() {
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({});
-  const [sky, setSky] = useState('linear-gradient(#799cf2, #b194f5, #f5a793, #f5e994)');
+  const [sky, setSky] = useState('linear-gradient(#23547D, #6C7592, #FF9A42)');
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const formRef = useRef(null);
@@ -86,21 +86,21 @@ function Weather() {
   const weatherBoxStyles = {
     position: 'absolute',
     zIndex: '1',
-    top: isMediumScreen ? '48%' : (isLargeScreen ? '50%' : (isLaptopScreen ? '70%' : '70%')),
+    top: isMediumScreen ? '48%' : (isLargeScreen ? '50%' : (isLaptopScreen ? '73%' : '73%')),
     left: '50%',
     transform: 'translate(-50%, -50%)',
   };
 
   const textFieldStyles = {
     backgroundColor: 'white',
-    width: isSmallScreen ? '100%' : '200%',
+    width: isMediumScreen ? '200%' : (isLargeScreen ? '250%' : (isSmallScreen ? '100%' : '250%')),
     marginTop: '40px',
-    marginLeft: isSmallScreen ? '0' : '-50%',
+    marginLeft: isMediumScreen ? '-50%' : (isLargeScreen ? '-75%' : (isSmallScreen ? '0%' : '-75%'))
   };
   
   const buttonStyles = {
-    width: isSmallScreen ? '100%' : '200%',
-    marginLeft: isSmallScreen ? '0' : '-50%',
+    width: isMediumScreen ? '200%' : (isLargeScreen ? '250%' : (isSmallScreen ? '100%' : '250%')),
+    marginLeft: isMediumScreen ? '-50%' : (isLargeScreen ? '-75%' : (isSmallScreen ? '0%' : '-75%')),
     marginTop: '10px',
   };
 
@@ -165,9 +165,9 @@ function Weather() {
   return (
     <ThemeProvider theme={theme}>
     <div style={{ ...backgroundStyles }} component="main">
-      <Box textAlign="center" mt={8}>
+      <Box textAlign="center" mt={10}>
         <Typography variant="h3" style={{ color: 'white', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>
-          Current weather
+          Current Weather
         </Typography>
         <Box mt={3} display="flex" justifyContent="center">
           <form onSubmit={handleSubmit} ref={formRef}>
@@ -189,7 +189,7 @@ function Weather() {
         </Box>
       {weather.error && (
         <Box style={{marginTop: '5%'}}>
-          <Lottie animationData={error} loop />
+          <Lottie animationData={Error} loop />
         </Box>
       )}
       {weather.main && (
